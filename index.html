@@ -69,6 +69,7 @@
         .nav-links a {
             color: var(--text);
             text-decoration: none;
+            cursor: pointer;
         }
 
         .support-btn {
@@ -102,6 +103,7 @@
             border-radius: 0.5rem;
             overflow: hidden;
             transition: transform 0.2s;
+            cursor: pointer;
         }
 
         .episode-card:hover {
@@ -178,6 +180,41 @@
             color: white;
         }
 
+        .about-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: none;
+        }
+
+        .about-section.active {
+            display: block;
+        }
+
+        .episodes-section {
+            display: none;
+        }
+
+        .episodes-section.active {
+            display: block;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 0.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -194,18 +231,21 @@
         <nav>
             <a href="#" class="logo">Tree Dingo Animations</a>
             <div class="nav-links">
-                <a href="#episodes">Comic</a>
-                <a href="#about">About</a>
+                <a onclick="showSection('episodes')">Comic</a>
+                <a onclick="showSection('about')">About</a>
                 <a href="#" class="support-btn" onclick="openSupportModal()">Support Creator</a>
             </div>
         </nav>
     </header>
 
     <main>
-        <h1>The Guardians of Nature</h1>
-        <div id="loading">Loading episodes...</div>
-        <div class="episodes-grid" id="episodes"></div>
-         <section id="about-section" class="about-section">
+        <section id="episodes-section" class="episodes-section active">
+            <h1 class="section-title">The Guardians of Nature</h1>
+            <div id="loading">Loading episodes...</div>
+            <div class="episodes-grid" id="episodes"></div>
+        </section>
+
+        <section id="about-section" class="about-section">
             <h1 class="section-title">About The Guardians of Nature</h1>
             <img src="https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg" alt="The Guardians of Nature Cover" class="about-image">
             <div class="about-content">
@@ -246,45 +286,67 @@
     </footer>
 
     <script>
-        // Fetch episodes from WEBTOON RSS feed
-        async function fetchEpisodes() {
-            try {
-                const response = await fetch('http://localhost:3000/api/episodes'/*'https://cors-anywhere.herokuapp.com/https://www.webtoons.com/en/rss?title_no=567651'*/);
-                const text = await response.text();
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(text, 'text/xml');
-                const items = xml.querySelectorAll('item');
-                
-                const episodesContainer = document.getElementById('episodes');
-                episodesContainer.innerHTML = '';
+        // Sample episodes data
+        const sampleEpisodes = [
+            {
+                title: "Episode 119 - Ink",
+                link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/ep-119/viewer",
+                pubDate: "2024-01-10",
+                thumbnail: "https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg"
+            },
+            {
+                title: "Episode 118 - Trouble at Coral's home",
+                link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/ep-118/viewer",
+                pubDate: "2024-01-03",
+                thumbnail: "https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg"
+            },
+            {
+                title: "Episode 117 - Lady Felicy and Lady Koks",
+                link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/ep-117/viewer",
+                pubDate: "2023-12-28",
+                thumbnail: "https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg"
+            }
+        ];
 
-                items.forEach(item => {
-                    const title = item.querySelector('title').textContent;
-                    const link = item.querySelector('link').textContent;
-                    const pubDate = new Date(item.querySelector('pubDate').textContent);
-                    const thumbnail = item.querySelector('thumbnail')?.textContent || '/placeholder.svg';
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
 
-                    const episodeCard = document.createElement('div');
-                    episodeCard.className = 'episode-card';
-                    episodeCard.innerHTML = `
-                        <img src="${thumbnail}" alt="${title}" class="episode-image">
-                        <div class="episode-content">
-                            <h2 class="episode-title">${title}</h2>
-                            <p class="episode-date">${pubDate.toLocaleDateString()}</p>
-                        </div>
-                    `;
-                    episodeCard.addEventListener('click', () => window.open(link, '_blank'));
-                    episodesContainer.appendChild(episodeCard);
-                });
+            // Show selected section
+            document.getElementById(`${sectionName}-section`).classList.add('active');
 
-                document.getElementById('loading').style.display = 'none';
-            } catch (error) {
-                console.error('Error fetching episodes:', error);
-                document.getElementById('loading').textContent = 'Error loading episodes. Please try again later.';
+            // If showing episodes, make sure they're loaded
+            if (sectionName === 'episodes') {
+                loadEpisodes();
             }
         }
 
-        // Payment modal functions
+        function loadEpisodes() {
+            const episodesContainer = document.getElementById('episodes');
+            const loadingElement = document.getElementById('loading');
+
+            episodesContainer.innerHTML = '';
+
+            // Load sample episodes
+            sampleEpisodes.forEach(episode => {
+                const episodeCard = document.createElement('div');
+                episodeCard.className = 'episode-card';
+                episodeCard.innerHTML = `
+                    <img src="${episode.thumbnail}" alt="${episode.title}" class="episode-image">
+                    <div class="episode-content">
+                        <h2 class="episode-title">${episode.title}</h2>
+                        <p class="episode-date">${new Date(episode.pubDate).toLocaleDateString()}</p>
+                    </div>
+                `;
+                episodeCard.addEventListener('click', () => window.open(episode.link, '_blank'));
+                episodesContainer.appendChild(episodeCard);
+            });
+
+            loadingElement.style.display = 'none';
+        }
+
         function openSupportModal() {
             document.getElementById('paymentModal').style.display = 'flex';
         }
@@ -293,9 +355,7 @@
             document.getElementById('paymentModal').style.display = 'none';
         }
 
-        async function processPayment(amount) {
-            // This is a placeholder for the payment processing
-            // In a real implementation, you would integrate with a payment processor like Stripe
+        function processPayment(amount) {
             alert(`Processing $${amount} payment... This is a demo.`);
             closePaymentModal();
         }
@@ -309,150 +369,7 @@
         }
 
         // Initialize
-        fetchEpisodes();
+        loadEpisodes();
     </script>
 </body>
 </html>
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tree Dingo Animations - The Guardians of Nature</title>
-    <style>
-        /* Previous CSS styles remain the same */
-
-        /* Add styles for about section */
-        .about-section {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: none;
-        }
-
-        .about-section.active {
-            display: block;
-        }
-
-        .episodes-section {
-            display: none;
-        }
-
-        .episodes-section.active {
-            display: block;
-        }
-
-        .about-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            margin: 2rem auto;
-            display: block;
-            border-radius: 0.5rem;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
-            color: var(--primary);
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="#" class="logo">Tree Dingo Animations</a>
-            <div class="nav-links">
-                <a href="#" onclick="showSection('episodes')">Comic</a>
-                <a href="#" onclick="showSection('about')">About</a>
-                <a href="#" class="support-btn" onclick="openSupportModal()">Support Creator</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <-- Episodes Section -
-        <section id="episodes-section" class="episodes-section active">
-            <h1 class="section-title">The Guardians of Nature</h1>
-            <div id="loading">Loading episodes...</div>
-            <div class="episodes-grid" id="episodes"></div>
-        </section>
-
-        !-- About Section --
-        <section id="about-section" class="about-section">
-            <h1 class="section-title">About The Guardians of Nature</h1>
-            <img src="https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg" alt="The Guardians of Nature Cover" class="about-image">
-            <div class="about-content">
-                <p>Welcome to Tree Dingo Animations, home of "The Guardians of Nature" - an exciting webcomic series about Blaze, the Guardian of fire, on his quest to find the other guardians of nature: water, Terra, energy, flora, and air.</p>
-                <br>
-                <p>Follow along as Blaze meets new friends and faces challenges in this adventure-filled story. The comic updates regularly with new episodes that continue to expand this magical world of elemental guardians.</p>
-                <br>
-                <p>Created with passion and dedication, this series aims to bring joy and excitement to readers of all ages. Thank you for joining us on this incredible journey!</p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Previous payment modal code remains the same --
-
-    <footer>
-        <p>© 2024 Tree Dingo Animations. Read The Guardians of Nature on 
-            <a href="https://www.webtoons.com/en/canvas/the-guardians-of-nature/list?title_no=567651" target="_blank">WEBTOON</a>
-        </p>
-    </footer>
-
-    <script>
-        // Updated fetchEpisodes function to use our API
-        async function fetchEpisodes() {
-            try {
-                const response = await fetch('http://localhost:3000/api/episodes');
-                const episodes = await response.json();
-                
-                const episodesContainer = document.getElementById('episodes');
-                episodesContainer.innerHTML = '';
-
-                episodes.forEach(episode => {
-                    const episodeCard = document.createElement('div');
-                    episodeCard.className = 'episode-card';
-                    episodeCard.innerHTML = `
-                        <img src="${episode.thumbnail}" alt="${episode.title}" class="episode-image">
-                        <div class="episode-content">
-                            <h2 class="episode-title">${episode.title}</h2>
-                            <p class="episode-date">${new Date(episode.pubDate).toLocaleDateString()}</p>
-                        </div>
-                    `;
-                    episodeCard.addEventListener('click', () => window.open(episode.link, '_blank'));
-                    episodesContainer.appendChild(episodeCard);
-                });
-
-                document.getElementById('loading').style.display = 'none';
-            } catch (error) {
-                console.error('Error fetching episodes:', error);
-                document.getElementById('loading').textContent = 'Error loading episodes. Please try again later.';
-            }
-        }
-
-        // Function to show/hide sections
-        function showSection(sectionName) {
-            // Hide all sections
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // Show selected section
-            document.getElementById(`${sectionName}-section`).classList.add('active');
-
-            // If showing episodes, make sure they're loaded
-            if (sectionName === 'episodes') {
-                fetchEpisodes();
-            }
-        }
-
-        // Previous modal functions remain the same
-
-        // Initialize
-        fetchEpisodes();
-    </script>
-</body>
-</html>-->
