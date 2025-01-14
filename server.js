@@ -59,7 +59,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // API endpoint to fetch WEBTOON episodes
 app.get('/api/episodes', async (req, res) => {
     try {
-        const response = await fetch('https://www.webtoons.com/en/rss?title_no=567651');
+        const response = await fetch(/*'https://www.webtoons.com/en/rss?title_no=567651'*/'https://cors-anywhere.herokuapp.com/https://www.webtoons.com/en/rss?title_no=567651');
         const xml = await response.text();
         
         const parser = new XMLParser({
