@@ -336,6 +336,30 @@ height: 160px;
             thumbnail: "https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg"
         }));
         episodes[118].title = "Episode 1 - The Beginning";
+
+        // Create an object to store episode data
+        const episodeData = {
+            119: { title: "Ink", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/ink/viewer?title_no=567651&episode_no=119" },
+            118: { title: "Trouble at Coral's home", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/trouble-at-corals-home/viewer?title_no=567651&episode_no=118" },
+            117: { title: "Lady Felicy and Lady Koks", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/lady-felicy-and-lady-koks/viewer?title_no=567651&episode_no=117" },
+            116: { title: "Falling apart", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/falling-apart/viewer?title_no=567651&episode_no=116" },
+            115: { title: "Problems 2", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/problems-2/viewer?title_no=567651&episode_no=115" },
+            114: { title: "Problems", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/problems/viewer?title_no=567651&episode_no=114" },
+            113: { title: "Miracle 2", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/miracle-2/viewer?title_no=567651&episode_no=113" },
+            112: { title: "Miracle", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/miracle/viewer?title_no=567651&episode_no=112" },
+            111: { title: "Here kitty kitty", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/here-kitty-kitty/viewer?title_no=567651&episode_no=111" },
+            110: { title: "Jack", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/jack/viewer?title_no=567651&episode_no=110" }
+        };
+
+        // Update the episodes array with the real titles
+        episodes.forEach((episode, index) => {
+            const episodeNumber = 119 - index;
+            if (episodeData[episodeNumber]) {
+                episode.title = `Episode ${episodeNumber} - ${episodeData[episodeNumber].title}`;
+                episode.link = episodeData[episodeNumber].link;
+            }
+        });
+
         function loadEpisodes() {
             const episodesContainer = document.getElementById('episodes');
             const searchInput = document.getElementById('searchInput');
