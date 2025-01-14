@@ -238,7 +238,7 @@
         // Fetch episodes from WEBTOON RSS feed
         async function fetchEpisodes() {
             try {
-                const response = await fetch('https://cors-anywhere.herokuapp.com/https://www.webtoons.com/en/rss?title_no=567651');
+                const response = await fetch('http://localhost:3000/api/episodes'/*'https://cors-anywhere.herokuapp.com/https://www.webtoons.com/en/rss?title_no=567651'*/);
                 const text = await response.text();
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(text, 'text/xml');
