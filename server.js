@@ -50,7 +50,7 @@ app.get('/api/episodes', async (req, res) => {
 
         res.json(sampleEpisodes);
 
-        /* Uncomment this section once we confirm the API is working with sample data
+        /* Uncomment this section once we confirm the API is working with sample data*/
         const response = await fetch('https://www.webtoons.com/en/rss?title_no=567651', {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -84,7 +84,7 @@ app.get('/api/episodes', async (req, res) => {
         }));
 
         res.json(episodes);
-        */
+        //here*/
 
     } catch (error) {
         console.error('Error in /api/episodes:', error);
