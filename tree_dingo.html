@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Dingo Animations - The Guardians of Nature</title>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --background: #ffffff;
+            --text: #1f2937;
+            --card-bg: #f3f4f6;
+            --border: #e5e7eb;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #1f2937;
+                --text: #f3f4f6;
+                --card-bg: #374151;
+                --border: #4b5563;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .support-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .support-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .episode-card {
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .episode-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .episode-content {
+            padding: 1rem;
+        }
+
+        .episode-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .episode-date {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--background);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .support-options {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .support-option {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .support-option:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">Tree Dingo Animations</a>
+            <div class="nav-links">
+                <a href="#episodes">Comic</a>
+                <a href="#about">About</a>
+                <a href="#" class="support-btn" onclick="openSupportModal()">Support Creator</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>The Guardians of Nature</h1>
+        <div id="loading">Loading episodes...</div>
+        <div class="episodes-grid" id="episodes"></div>
+    </main>
+
+    <div class="payment-modal" id="paymentModal">
+        <div class="modal-content">
+            <h2>Support the Creator</h2>
+            <div class="support-options">
+                <div class="support-option" onclick="processPayment(5)">
+                    <h3>Coffee - $5</h3>
+                    <p>Buy me a coffee to keep creating!</p>
+                </div>
+                <div class="support-option" onclick="processPayment(20)">
+                    <h3>Super Fan - $20</h3>
+                    <p>Show your love with a bigger contribution!</p>
+                </div>
+                <div class="support-option" onclick="processPayment(50)">
+                    <h3>True Patron - $50</h3>
+                    <p>Become a true patron of the arts!</p>
+                </div>
+            </div>
+            <button onclick="closePaymentModal()" class="support-btn">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Tree Dingo Animations. Read The Guardians of Nature on 
+            <a href="https://www.webtoons.com/en/canvas/the-guardians-of-nature/list?title_no=567651" target="_blank">WEBTOON</a>
+        </p>
+    </footer>
+
+    <script>
+        // Fetch episodes from WEBTOON RSS feed
+        async function fetchEpisodes() {
+            try {
+                const response = await fetch('https://cors-anywhere.herokuapp.com/https://www.webtoons.com/en/rss?title_no=567651');
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(text, 'text/xml');
+                const items = xml.querySelectorAll('item');
+                
+                const episodesContainer = document.getElementById('episodes');
+                episodesContainer.innerHTML = '';
+
+                items.forEach(item => {
+                    const title = item.querySelector('title').textContent;
+                    const link = item.querySelector('link').textContent;
+                    const pubDate = new Date(item.querySelector('pubDate').textContent);
+                    const thumbnail = item.querySelector('thumbnail')?.textContent || '/placeholder.svg';
+
+                    const episodeCard = document.createElement('div');
+                    episodeCard.className = 'episode-card';
+                    episodeCard.innerHTML = `
+                        <img src="${thumbnail}" alt="${title}" class="episode-image">
+                        <div class="episode-content">
+                            <h2 class="episode-title">${title}</h2>
+                            <p class="episode-date">${pubDate.toLocaleDateString()}</p>
+                        </div>
+                    `;
+                    episodeCard.addEventListener('click', () => window.open(link, '_blank'));
+                    episodesContainer.appendChild(episodeCard);
+                });
+
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error fetching episodes:', error);
+                document.getElementById('loading').textContent = 'Error loading episodes. Please try again later.';
+            }
+        }
+
+        // Payment modal functions
+        function openSupportModal() {
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        async function processPayment(amount) {
+            // This is a placeholder for the payment processing
+            // In a real implementation, you would integrate with a payment processor like Stripe
+            alert(`Processing $${amount} payment... This is a demo.`);
+            closePaymentModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target === modal) {
+                closePaymentModal();
+            }
+        }
+
+        // Initialize
+        fetchEpisodes();
+    </script>
+</body>
+</html>
