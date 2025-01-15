@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -437,4 +437,840 @@ height: 160px;
         loadEpisodes();
     </script>
 </body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<!-- Previous head and style sections remain exactly as above -->
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Dingo Animations - The Guardians of Nature</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #B6D0E2;
+            --primary-hover: #A3C1D9;
+            --secondary: #F8C8DC;
+            --secondary-hover: #F5B5CF;
+            --background: #F0F8FF;
+            --text: #465B73;
+            --card-bg: #FFFFFF;
+            --border: #E6E6FA;
+            --accent: #E6E6FA;
+            --accent-hover: #D8D8F6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(182, 208, 226, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--primary-hover);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .support-btn {
+            background-color: var(--secondary);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .support-btn:hover {
+            background-color: var(--secondary-hover);
+            transform: translateY(-2px);
+        }
+
+        .comics-section {
+            padding: 4rem 2rem;
+            background-color: var(--card-bg);
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(182, 208, 226, 0.2);
+        }
+
+        .comics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .comic-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(182, 208, 226, 0.15);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .comic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(182, 208, 226, 0.25);
+        }
+
+        .comic-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .comic-content {
+            padding: 1.5rem;
+        }
+
+        .comic-content h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .comic-content p {
+            color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-section {
+            padding: 4rem 2rem;
+            background-color: var(--secondary);
+            color: var(--text);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(70, 91, 115, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .contact-section {
+            padding: 4rem 2rem;
+            background-color: var(--card-bg);
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background-color: var(--background);
+            transition: all 0.3s;
+            color: var(--text);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(182, 208, 226, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: var(--primary);
+            font-size: 1.8rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--text);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background-color: var(--border);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: var(--text);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(70, 91, 115, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: var(--card-bg);
+            margin: 2rem auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(70, 91, 115, 0.2);
+        }
+
+        .close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text);
+            transition: color 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--background);
+        }
+
+        .close:hover {
+            color: var(--secondary);
+            background-color: var(--border);
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        #searchInput {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            width: 300px;
+            background-color: var(--background);
+            transition: all 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(182, 208, 226, 0.2);
+        }
+
+        #sortOrder {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            background-color: var(--background);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #sortOrder:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(182, 208, 226, 0.2);
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .episode-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(182, 208, 226, 0.15);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .episode-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(182, 208, 226, 0.25);
+        }
+
+        .episode-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .episode-content {
+            padding: 1.2rem;
+        }
+
+        .episode-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .episode-date {
+            color: var(--text);
+            opacity: 0.7;
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Menu Styles */
+        .menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .menu-btn:hover {
+            background-color: var(--border);
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--card-bg);
+            z-index: 1000;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 2px 0 20px rgba(70, 91, 115, 0.1);
+            padding: 2rem;
+        }
+
+        .mobile-sidebar.active {
+            left: 0;
+        }
+
+        .mobile-sidebar .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .mobile-sidebar .close-btn:hover {
+            background-color: var(--border);
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .mobile-nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover {
+            background-color: var(--background);
+            color: var(--secondary);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(70, 91, 115, 0.5);
+            z-index: 999;
+            backdrop-filter: blur(3px);
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(70, 91, 115, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            backdrop-filter: blur(5px);
+        }
+
+        .payment-modal .modal-content {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .support-options {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .support-option {
+            background-color: var(--background);
+            padding: 1.2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--border);
+        }
+
+        .support-option:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .support-option h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .support-option p {
+            color: var(--text);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #searchInput,
+            #sortOrder {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+
+<body>
+    <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <button class="close-btn" onclick="closeMobileMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mobile-nav-links">
+            <a href="#comics" onclick="closeMobileMenu()">Comics</a>
+            <a href="#gallery" onclick="closeMobileMenu()">Gallery</a>
+            <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+            <a href="#" class="btn" onclick="openSupportModal(); closeMobileMenu()">Support Creator</a>
+        </div>
+    </div>
+
+    <header>
+        <nav>
+            <button class="menu-btn" onclick="openMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="#" class="logo">Tree Dingo Animations</a>
+            <div class="nav-links">
+                <a href="#comics">Comics</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+                <a href="#" class="support-btn" onclick="openSupportModal()">Support Creator</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="comics" class="comics-section">
+        <h2 class="section-title">Featured Comics</h2>
+        <div class="comics-grid">
+            <div class="comic-card" onclick="openComicModal()">
+                <img src="https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg" alt="The Guardians of Nature" class="comic-image">
+                <div class="comic-content">
+                    <h3>The Guardians of Nature</h3>
+                    <p>Follow Blaze's journey as he searches for the other guardians.</p>
+                    <button class="btn">View Episodes</button>
+                </div>
+            </div>
+            <div class="comic-card">
+                <img src="https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg" alt="New Comic Series" class="comic-image">
+                <div class="comic-content">
+                    <h3>New Comic Series</h3>
+                    <p>Coming soon! Stay tuned for our next exciting series.</p>
+                    <button class="btn" disabled>Coming Soon</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="comicModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeComicModal()">&times;</span>
+            <h2 class="section-title">The Guardians of Nature</h2>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search episodes...">
+                <select id="sortOrder">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                </select>
+            </div>
+            <div id="episodes" class="episodes-grid"></div>
+        </div>
+    </div>
+
+    <section id="gallery" class="gallery-section">
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg" alt="Artwork 1">
+            </div>
+            <div class="gallery-item">
+                <img src="https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg" alt="Artwork 2">
+            </div>
+            <div class="gallery-item">
+                <img src="https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg" alt="Artwork 3">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Contact Us</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+        <div class="social-links">
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 Tree Dingo Animations. All rights reserved.</p>
+    </footer>
+
+    <div class="payment-modal" id="paymentModal">
+        <div class="modal-content">
+            <h2 class="section-title">Support the Creator</h2>
+            <div class="support-options">
+                <div class="support-option" onclick="processPayment(5)">
+                    <h3>Coffee - $5</h3>
+                    <p>Buy me a coffee to keep creating!</p>
+                </div>
+                <div class="support-option" onclick="processPayment(20)">
+                    <h3>Super Fan - $20</h3>
+                    <p>Show your love with a bigger contribution!</p>
+                </div>
+                <div class="support-option" onclick="processPayment(50)">
+                    <h3>True Patron - $50</h3>
+                    <p>Become a true patron of the arts!</p>
+                </div>
+            </div>
+            <button onclick="closePaymentModal()" class="btn">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Episode data
+        const episodes = Array.from({ length: 119 }, (_, i) => ({
+            title: `Episode ${119 - i} - Title Coming Soon`,
+            link: "#",
+            pubDate: new Date(2024, 0, 17 - (i * 7)).toISOString(),
+            thumbnail: "https://sjc.microlink.io/R5sUi7fEB6_B-wot6Gqbgpm39rgTumcq7qjYcTDSGWqQVpG584Y41rLIuNAZf4PWdOLyPzZdyGxacn5NGHMzmg.jpeg"
+        }));
+
+        const episodeData = {
+            119: { title: "Ink", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/ink/viewer?title_no=567651&episode_no=119" },
+            118: { title: "Trouble at Coral's home", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/trouble-at-corals-home/viewer?title_no=567651&episode_no=118" },
+            117: { title: "Lady Felicy and Lady Koks", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/lady-felicy-and-lady-koks/viewer?title_no=567651&episode_no=117" },
+            116: { title: "Falling apart", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/falling-apart/viewer?title_no=567651&episode_no=116" },
+            115: { title: "Problems 2", link: "https://www.webtoons.com/en/canvas/the-guardians-of-nature/problems-2/viewer?title_no=567651&episode_no=115" }
+        };
+
+        episodes.forEach((episode, index) => {
+            const episodeNumber = 119 - index;
+            if (episodeData[episodeNumber]) {
+                episode.title = `Episode ${episodeNumber} - ${episodeData[episodeNumber].title}`;
+                episode.link = episodeData[episodeNumber].link;
+            }
+        });
+
+        function openComicModal() {
+            document.getElementById('comicModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            loadEpisodes();
+        }
+
+        function closeComicModal() {
+            document.getElementById('comicModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function loadEpisodes() {
+            const episodesContainer = document.getElementById('episodes');
+            const searchInput = document.getElementById('searchInput');
+            const sortOrder = document.getElementById('sortOrder');
+
+            function filterAndDisplayEpisodes() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const sortDirection = sortOrder.value;
+                
+                let filteredEpisodes = episodes.filter(episode => 
+                    episode.title.toLowerCase().includes(searchTerm)
+                );
+
+                if (sortDirection === 'oldest') {
+                    filteredEpisodes.reverse();
+                }
+
+                episodesContainer.innerHTML = '';
+                
+                filteredEpisodes.forEach(episode => {
+                    const episodeCard = document.createElement('div');
+                    episodeCard.className = 'episode-card';
+                    episodeCard.innerHTML = `
+                        <img src="${episode.thumbnail}" alt="${episode.title}" class="episode-image">
+                        <div class="episode-content">
+                            <h3 class="episode-title">${episode.title}</h3>
+                            <p class="episode-date">${new Date(episode.pubDate).toLocaleDateString()}</p>
+                        </div>
+                    `;
+                    episodeCard.addEventListener('click', () => window.open(episode.link, '_blank'));
+                    episodesContainer.appendChild(episodeCard);
+                });
+            }
+
+            searchInput.addEventListener('input', filterAndDisplayEpisodes);
+            sortOrder.addEventListener('change', filterAndDisplayEpisodes);
+            filterAndDisplayEpisodes();
+        }
+
+        // Mobile menu functions
+        function openMobileMenu() {
+            document.getElementById('mobileSidebar').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileSidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Support modal functions
+        function openSupportModal() {
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function processPayment(amount) {
+            alert(`Processing $${amount} payment... This is a demo.`);
+            closePaymentModal();
+        }
+
+        // Global click handler for modals
+        window.onclick = function(event) {
+            const comicModal = document.getElementById('comicModal');
+            const paymentModal = document.getElementById('paymentModal');
+            const overlay = document.getElementById('overlay');
+
+            if (event.target === comicModal) {
+                closeComicModal();
+            }
+            if (event.target === paymentModal) {
+                closePaymentModal();
+            }
+            if (event.target === overlay) {
+                closeMobileMenu();
+            }
+        }
+    </script>
+</body>
 </html>
+
+
+
+
